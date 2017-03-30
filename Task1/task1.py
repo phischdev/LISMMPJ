@@ -28,7 +28,7 @@ for row in prediciton:
         prediciton2.append(array)
         i += 1
 
-numpy.savetxt('output.csv', prediciton2, fmt="%.15f", delimiter=',')
+numpy.savetxt('output.csv', prediciton2, fmt="%.15f", delimiter=',', header="Id,y", comments='')
 
 
 
