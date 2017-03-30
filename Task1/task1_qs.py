@@ -1,3 +1,4 @@
+from sklearn.decomposition import PCA
 from sklearn.kernel_ridge import KernelRidge
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error
@@ -15,6 +16,16 @@ ys = numpy.array(list(map(lambda li: li[1], data)))
 # split data
 r = random.randint(0, 4294967295) # generate a random number
 X_train, X_test, y_train, y_test = train_test_split(xs, ys, test_size=0.1, random_state=r)
+
+
+# NOTE: does not help
+'''
+# PCA
+pca = PCA(n_components=5).fit(X_train)
+X_train_pca = pca.transform(X_train)
+X_test_pca = pca.transform(X_test)
+'''
+
 
 # prediction using linear ridge regression
 clf_ridge = Ridge(alpha=1.0)
@@ -104,7 +115,7 @@ print('grid search with kernel ridge regression (poly 4th°) error: ' + repr(RMS
 test = numpy.genfromtxt('test.csv', delimiter=',')
 test1 = test[1:]
 test2 = numpy.array(list(map(lambda li: li[1:], test1)))
-
+# NOTE: remember to change the prediction model here!!!
 prediction = gs_kp3.predict(test2)
 
 # write to file
