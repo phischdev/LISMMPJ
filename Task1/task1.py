@@ -15,8 +15,9 @@ with open('train.csv', 'r') as csvfile:
         li = li[2:len(li)]
     data = numpy.array(data)'''
     data = numpy.genfromtxt('train.csv', delimiter = ',')
-    data = data[1:len(data)]
-    
-
+    data = data[1:]
+    data = numpy.array(list(map(lambda li : li[1:], data)))
     print(data)
+
+
     #data.clear();
