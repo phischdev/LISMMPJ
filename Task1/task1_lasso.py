@@ -37,7 +37,7 @@ model = LassoCV(cv=20)
 model.fit(XS,ys)
 prediction = model.predict(T2)
 
-
+print('optimal alpha = ' + repr(model.alpha_))
 
 # write to file
 i = 900
