@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error
 import random
 from sklearn.linear_model import Ridge
+from sklearn import linear_model
 import numpy
 
 # load data
@@ -150,7 +151,12 @@ y_pred = clf_kpf3.predict(X_test_pca)
 # error
 RMSE = mean_squared_error(y_test, y_pred) ** 0.5
 print('Kernel (3rd degree poly) ridge regression error: ' + repr(RMSE))
+
+
 '''
+ )
+
+
 gs_kpf3 = GridSearchCV(Ridge(), cv=9, param_grid={"alpha": [1e0, 0.1, 1e-2, 1e-3, 1e-4, 0],
                                                   "solver": ['sag', 'lsqr']})
 gs_kpf3.fit(X_train_pca, y_train)
@@ -210,8 +216,9 @@ test2 = numpy.array(list(map(lambda li: li[1:], test1)))
 # NOTE: remember to change the prediction model here!!!
 test_p3 = poly3.transform(test2)
 test_pca = pca_p3.transform(test_p3)
-# prediction = gs_kpf3.predict(test_pca)
+#prediction = gs_kpf3.predict(test_pca)
 prediction = adr.predict(test_pca)
+
 
 # write to file
 i = 900
