@@ -29,8 +29,6 @@ test2 = numpy.array(list(map(lambda li: li[1:], test1)))
 
 
 
-
-
 polys = PolynomialFeatures(3)
 XS = polys.fit_transform(xs)
 T2 = polys.fit_transform(test2)
