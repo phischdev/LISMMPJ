@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report
+from sklearn.model_selection import GridSearchCV
 
 #Load data into appropriate formats
 data = numpy.genfromtxt('train.csv', delimiter=',')
@@ -30,7 +31,13 @@ for i in alphas:
 '''
 #Define parameters to be tuned by GridSearchCV
 tuned_parameters = [{
-    
+    'hidden_layer_sizes':[(2,15),(4,15),(6,15),(8,15),(10,15)],
+    'activation':['tanh','logistic','relu'],
+    'solver':['lbfgs','sgd','adam'],
+    'alpha':[0.00001, 0.0001,0.001, 0.01, 0.1, 1, 10],
+    'learning_rate':['constant', 'invscaling', 'adaptive'],
+    'learning_rate_init':[0.0001, 0.001, 0.01],
+    'momentum':[0.7, 0.9, 0.99]
 }]
 
 #Since MLP is sensitive to feature scaling, we normalize the data
@@ -40,7 +47,12 @@ scaler = StandardScaler()
 scaler.fit_transform(X_train)
 
 #Split data into training and test part for validation
-X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=.4)
+#X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=.4)
+
+#Find best model and fit to data
+mlp = GridSearchCV(MLPClassifier(), tuned_parameters, cv=20)
+mlp.fit(X_train, y_train)
+
 
 
 '''max_score = 0
