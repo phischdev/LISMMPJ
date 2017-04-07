@@ -40,6 +40,8 @@ tuned_parameters = [{
     'momentum':[0.7, 0.9, 0.99]
 }]
 
+#Git comment
+
 #Since MLP is sensitive to feature scaling, we normalize the data
 scaler = StandardScaler()
 
