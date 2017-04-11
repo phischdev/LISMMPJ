@@ -5,6 +5,12 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import accuracy_score
+
+
+
+
+
 
 df = pd.read_csv('train.csv', header = 0)
 df = df._get_numeric_data()
@@ -12,13 +18,13 @@ df = df._get_numeric_data()
 dft = pd.read_csv('test.csv', header = 0)
 dft = dft._get_numeric_data()
 
+X_train = df.ix[:,'x1':].as_matrix();
 y_train = df['y']
+x_test = dft.ix[:,'x1':].as_matrix();
 
+X_train = StandardScaler().fit_transform(X_train,y_train)
+x_test = StandardScaler().fit_transform(x_test)
 
-x_total = df.ix[:,'x1':] + dft.ix[:,'x1':]
-x_total_scaled = StandardScaler.fit_transform(x_total)
-x_train = x_total_scaled[0:999]
-x_test = x_total_scaled[1000:3999]
 
 
 
@@ -32,26 +38,18 @@ for i in alphas:
     classifiers.append(MLPClassifier(alpha=i, random_state=1, hidden_layer_sizes=(15,15,15), warm_start=True, solver='lbfgs'))
 '''
 #Define parameters to be tuned by GridSearchCV
-tuned_parameters = [{
-    'solver':['sgd','adam','lbfgs'],
-    'alpha':[0.00001, 0.0001,0.001, 0.01, 0.1, 1, 10],
-}]
+tuned_parameters = [{'alpha':[ 0.01,0.012,0.014,0.016,0.018],}]
 
 #Git comment
 
-#Since MLP is sensitive to feature scaling, we normalize the data
-scaler = StandardScaler()
 
-#Fit to training data
-scaler.fit_transform(X_train)
-scaler.fit_transform(y_train)
-scaler.fit_transform(x_test)
 
 #Split data into training and test part for validation
 #X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=.4)
 
 #Find best model and fit to data
-mlp = GridSearchCV(MLPClassifier(), tuned_parameters, cv=20)
+mlp = GridSearchCV(MLPClassifier(max_iter = 700),tuned_parameters,cv = 10)
+#mlp= MLPClassifier(max_iter = 700,alpha = 0.1)
 mlp.fit(X_train, y_train)
 
 
