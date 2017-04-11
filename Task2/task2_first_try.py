@@ -48,7 +48,7 @@ tuned_parameters = [{'alpha':[ 0.01,0.012,0.014,0.016,0.018],}]
 #X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=.4)
 
 #Find best model and fit to data
-mlp = GridSearchCV(MLPClassifier(max_iter = 700),tuned_parameters,cv = 10)
+mlp = GridSearchCV(MLPClassifier(max_iter = 2100),tuned_parameters,cv = 10)
 #mlp= MLPClassifier(max_iter = 700,alpha = 0.1)
 mlp.fit(X_train, y_train)
 
