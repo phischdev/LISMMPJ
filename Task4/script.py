@@ -56,7 +56,7 @@ model = Sequential([
 Dense(output_dim=output_num_units, input_dim=hidden4_num_units, activation='relu'),
  ])
 model.compile(loss='sparse_categorical_crossentropy', optimizer='Nadam', metrics=['accuracy'])
-model.fit(X_train,y_train,batch_size,epochs)
+model.fit(X_train_labeled,y_train,batch_size,epochs)
 y_pred = model.predict_classes(X_test)
 print(y_pred)
 d = {'y':y_pred, 'Id': np.linspace(30000, 30000+y_pred.size-1, num=y_pred.size)}
