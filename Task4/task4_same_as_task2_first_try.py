@@ -64,7 +64,7 @@ for i in alphas:
     classifiers.append(MLPClassifier(alpha=i, random_state=1, hidden_layer_sizes=(15,15,15), warm_start=True, solver='lbfgs'))
 '''
 # Define parameters to be tuned by GridSearchCV
-#tuned_parameters = [{'alpha': [0.01, 0.012, 0.014, 0.016, 0.018], }]
+tuned_parameters = [{'alpha': [0.08, 0.1, 0.3, 0.5]}]
 
 # Git comment
 
@@ -73,11 +73,19 @@ for i in alphas:
 # X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=.4)
 
 # Find best model and fit to data
-# mlp = GridSearchCV(MLPClassifier(max_iter=2100), tuned_parameters, cv=10, verbose=100)
-mlp= MLPClassifier(max_iter=700, verbose=100)
+mlp = GridSearchCV(MLPClassifier(max_iter=2100, verbose=100), tuned_parameters, cv=10, verbose=100)
+#mlp = MLPClassifier(max_iter=700, verbose=100)
 mlp.fit(X_train_labeled, y_train_labeled)
-fit1 = mlp.predict(X_train_unlabeled)
-mlp.fit(X_train_unlabeled, fit1)
+
+# train on unlabeled data first
+# fit1 = mlp.predict(X_train_unlabeled)
+
+print(mlp.best_params_)
+# now concatenate
+# X_train = np.concatenate((X_train_labeled, X_train_unlabeled), axis=0)
+# y_train = np.concatenate((y_train_labeled, fit1), axis=0)
+
+# mlp.fit(X_train, y_train)
 
 
 # Predict classification of test data based on model

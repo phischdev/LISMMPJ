@@ -31,14 +31,14 @@ print('Size of X_test: ' + repr(X_test.shape) + '\n')
 
 
 # derp stuff from task 3
-'''
+
 # define vars
-input_num_units = 100
+input_num_units = 128
 hidden1_num_units = 128
 hidden2_num_units = 256
 hidden3_num_units = 512
 hidden4_num_units = 128
-output_num_units = 45234
+output_num_units = 30000
 epochs = 20
 batch_size = 128
 
@@ -59,8 +59,8 @@ model.compile(loss='sparse_categorical_crossentropy', optimizer='Nadam', metrics
 model.fit(X_train,y_train,batch_size,epochs)
 y_pred = model.predict_classes(X_test)
 print(y_pred)
-d = {'y':y_pred, 'Id': np.linspace(45324, 45324+y_pred.size-1, num=y_pred.size)}
+d = {'y':y_pred, 'Id': np.linspace(30000, 30000+y_pred.size-1, num=y_pred.size)}
 dfp = df = pd.DataFrame(data=d)
 dfp.Id = df.Id.astype(int)
 dfp.to_csv('output.csv', index=False)
-'''
+
